@@ -12,16 +12,14 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 # ============ НАСТРОЙКИ ============
 
-BOT_TOKEN = "2222"  # токен от @BotFather
+import os
 
-# Чат для руководства (группа/канал) – сюда бот будет слать все заявки и уведомления
-ADMIN_CHAT_ID = -1003362582742  # TODO: сюда ID чата руководства
-
-# Список ID админов, которые могут управлять ботом/БД
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "-1003362582742"))
 ADMIN_USER_IDS = [
-    1403904334,  # TODO: твой ID
-    # можно добавить ещё
+    int(x) for x in os.getenv("ADMIN_USER_IDS", "1403904334").split(",") if x.strip()
 ]
+
 
 DB_PATH = "tickets.db"
 
