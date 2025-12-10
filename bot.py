@@ -1,25 +1,29 @@
 # bot.py
 import logging
+import os
 import sqlite3
 from datetime import datetime
 from urllib.parse import quote_plus
 from typing import Optional, Set
 
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
+from aiogram.utils import executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 # ============ НАСТРОЙКИ ============
 
-import os
+# Токен и ID читаем из окружения, но есть дефолтные значения
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8529830956:AAEg_ToFvLI5o69q5gEY5GzYzCJPESQYYFQ")  # токен от @BotFather
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+# Чат для руководства (группа/канал) – сюда бот будет слать все заявки и уведомления
 ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "-1003362582742"))
+
+# Список ID админов, которые могут управлять ботом/БД
 ADMIN_USER_IDS = [
     int(x) for x in os.getenv("ADMIN_USER_IDS", "1403904334").split(",") if x.strip()
 ]
-
 
 DB_PATH = "tickets.db"
 
